@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR Code Generator</title>
+</head>
+<body>
+
+<form>
+  <label for="link">Enter link:</label><br>
+  <input type="text" name="link" id="link"><br>
+  <input type="button" value="Generate QR Code" onclick="generateQRCode()">
+</form> 
+
+<div id="qr-code"></div>
+
+<script>
+  function generateQRCode() {
+    // get link from text input
+    var link = document.getElementById("link").value;
+
+    // send link to PHP script to generate QR code
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // display QR code image in the "qr-code" div
+        document.getElementById("qr-code").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "qr-code-generator.php?link=" + link, true);
+    xhttp.send();
+  }
+</script>
+
+</body>
+</html>
